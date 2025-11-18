@@ -7,7 +7,7 @@ class HashTable:
         self.table: List[list] = [[] for _ in range(size)]
 
     def hash_function(self, key: str) -> int:
-        # Assumes key like 'P12345678'; ignores the 'P' and uses the numeric portion
+        # e.g. 'P12345678'; ignores the 'P' and uses the numeric portion
         numeric_key = int(key[1:])
         return numeric_key % self.size
 
