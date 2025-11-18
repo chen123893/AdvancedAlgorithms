@@ -14,12 +14,14 @@ class HashTable:
     def insert(self, product) -> None:
         index = self.hash_function(product.product_id)
         for item in self.table[index]:
+            # if got duplicate, replace to new one
             if item.product_id == product.product_id:
                 item.name = product.name
                 item.product_type = product.product_type
                 item.price = product.price
                 item.quantity = product.quantity
                 return
+        # add new product
         self.table[index].append(product)
 
     def search(self, product_id: str):
