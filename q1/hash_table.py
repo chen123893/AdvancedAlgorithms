@@ -1,5 +1,4 @@
 from typing import Optional, List
-"""Hash table using separate chaining (array of lists)."""
 
 class HashTable:
     def __init__(self, size: int = 100):
@@ -14,14 +13,14 @@ class HashTable:
     def insert(self, product) -> None:
         index = self.hash_function(product.product_id)
         for item in self.table[index]:
-            # if got duplicate, replace to new one
+            # if duplicate found, replace with new one
             if item.product_id == product.product_id:
                 item.name = product.name
                 item.product_type = product.product_type
                 item.price = product.price
                 item.quantity = product.quantity
                 return
-        # add new product
+        # add new product if not found
         self.table[index].append(product)
 
     def search(self, product_id: str):
@@ -59,6 +58,7 @@ class HashTable:
         return False
 
     def display_id(self) -> None:
+        #Display all product IDs organized by bucket.
         print("\n===== PRODUCT IDS IN HASH TABLE =====")
         for i, bucket in enumerate(self.table):
             print(f"Bucket {i}: ", end="")
@@ -68,6 +68,7 @@ class HashTable:
                 print(", ".join(item.product_id for item in bucket))
 
     def display_items(self) -> None:
+        #same with display_id but shows details
         print("\n===== INVENTORY RECORDS =====")
         for i, bucket in enumerate(self.table):
             print(f"Bucket {i}: ", end="")
@@ -77,6 +78,7 @@ class HashTable:
                 print(", ".join(str(item) for item in bucket))
 
     def get_all_products(self):
+        #Get all products as a flat list
         products = []
         for bucket in self.table:
             products.extend(bucket)
