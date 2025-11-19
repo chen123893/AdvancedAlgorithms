@@ -7,45 +7,67 @@ from typing import Dict, Set, Iterable, Optional
 class DirectedGraph:
 
     def __init__(self) -> None:
+        # Adjacency list storing: vertex -> set of outgoing neighbors
         self._adj: Dict[str, Set[str]] = {}
 
     def addVertex(self, v: str) -> None:
+        # Add a vertex if it does not already exist
         if v not in self._adj:
             self._adj[v] = set()
 
     def addEdge(self, src: str, dst: str) -> None:
+        # Ensure both vertices exist before adding the directed edge
         if src not in self._adj:
             self._adj[src] = set()
         if dst not in self._adj:
             self._adj[dst] = set()
+
+        # Add directed edge src → dst
         self._adj[src].add(dst)
 
+    #following function
     def listOutgoingAdjacentVertex(self, v: str) -> Iterable[str]:
+        # Return all vertices that v points to (outgoing neighbors)
         if v not in self._adj:
             return []
         outs = list(self._adj[v])
+
+        # Try to return sorted result; fallback for non-sortable items
         try:
             return sorted(outs)
         except:
             return outs
 
     def vertices(self) -> Iterable[str]:
+        # Return list of all vertices in the graph
         try:
             return sorted(self._adj.keys())
         except:
             return list(self._adj.keys())
 
     def hasVertex(self, v: str) -> bool:
+        # Check if vertex exists in the graph
         return v in self._adj
 
     def removeEdge(self, src: str, dst: str) -> bool:
+        # Remove a directed edge src → dst if it exists
         if src in self._adj and dst in self._adj[src]:
             self._adj[src].remove(dst)
             return True
         return False
 
+
     def followersOf(self, target: str) -> Iterable[str]:
-        result = [v for v, outs in self._adj.items() if target in outs]
+        # Return all vertices that have an edge pointing to 'target'
+        result = []
+
+        # Loop through every vertex and its outgoing edges
+        for vertex, outgoing_edges in self._adj.items():
+            # Check if this vertex points to the target
+            if target in outgoing_edges:
+                result.append(vertex)
+
+        # Return sorted follower list
         try:
             return sorted(result)
         except:
@@ -77,6 +99,7 @@ class PeopleDirectory:
     def get(self, name: str) -> Optional[Person]:
         return self._by_name.get(name)
 
+    #function that return a list of name
     def all_names(self) -> Iterable[str]:
         return sorted(self._by_name.keys())
 
@@ -123,6 +146,7 @@ def input_nonempty(prompt: str) -> str:
             return s
         print("Input cannot be empty.")
 
+#validation
 def choose_name(prompt: str, dir: PeopleDirectory) -> Optional[str]:
     n = input(prompt).strip()
     if not n:
@@ -196,7 +220,7 @@ def unfollow_flow(dir: PeopleDirectory, g: DirectedGraph) -> None:
             print("Relationship not found.\n")
 
 def list_all_users(dir: PeopleDirectory) -> None:
-    names = sorted(dir.all_names())
+    names = dir.all_names()
     print("\nAll users:")
     print(", ".join(names))
     print()
