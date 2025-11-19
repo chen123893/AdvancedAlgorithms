@@ -63,7 +63,7 @@ def compare_hash_vs_array_performance(hash_table) -> None:
     # Create graph
     plt.figure(figsize=(8, 5))
     plt.plot(data_sizes, ht_times, marker='o', label="Hash Table Search (O(1))")
-    plt.plot(data_sizes, arr_times, marker='o', label="1D Array Search (O(n))")
+    plt.plot(data_sizes, arr_times, marker='o', label="Array Search (O(n))")
     plt.title("Hash Table vs Array Search Performance")
     plt.xlabel("Number of Records")
     plt.ylabel("Average Search Time (µs)")
