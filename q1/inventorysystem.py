@@ -8,6 +8,7 @@ from performance import compare_hash_vs_array_performance
 def inventory_system() -> None:
     ht = HashTable(size=100)
     generate_sample_data(ht, count=30)
+    #keep track used id
     used_ids = set(p.product_id for p in ht.get_all_products())
 
     while True:
@@ -40,7 +41,7 @@ def inventory_system() -> None:
             print(f"Product inserted successfully! Assigned ID: {product_id}")
 
         elif choice == "2":
-            pid = input("Enter Product ID to search (e.g. P12345678): ").strip()
+            pid = input("Enter Product ID to search (e.g. P12345678): ").strip()#remove spacing
             result = ht.search(pid)
             print("Product Found:" if result else "Product not found.")
             if result:
