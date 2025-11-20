@@ -6,8 +6,8 @@ from exporter import export_to_csv
 from performance import compare_hash_vs_array_performance
 
 def inventory_system() -> None:
-    ht = HashTable(size=100)
-    generate_sample_data(ht, count=30)
+    ht = HashTable(size=20)
+    generate_sample_data(ht, count=8)
     #keep track used id
     used_ids = set(p.product_id for p in ht.get_all_products())
 
